@@ -81,7 +81,3 @@ Replace `` with the actual ID.
 Please replace localhost:3000 with your actual server URL. If any additional headers or parameters are required, please include them in the cURL commands.
 
 The responses from these endpoints will be JSON objects containing either the requested data, a success message, or an error message.
-
-```
-
-```
