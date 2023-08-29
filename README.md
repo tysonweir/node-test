@@ -46,32 +46,42 @@ cURL command
 
 added a address
 
-````curl -X POST -H "Content-Type: application/json" -d '{
+```
+curl -X POST -H "Content-Type: application/json" -d '{
     "street": "123 Main St",
     "city": "New York",
     "state": "NY",
     "zipCode": "10001",
     "userId": 1,
     "companyId": 1
-}' http://localhost:3000/addresses```
+}' http://localhost:3000/addresses
+```
 
 added a company
-```curl -X POST -H "Content-Type: application/json" -d '{
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{
     "businessName": "Acme Corp",
     "businessType": "Ecommerce"
-}' http://localhost:3000/company```
+}' http://localhost:3000/company
+```
 
 added a user
-```curl -X POST -H "Content-Type: application/json" -d '{
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{
     "firstName": "John",
     "lastName": "Doe",
     "email": "john.doe@example.com"
-}' http://localhost:3000/users```
-
+}' http://localhost:3000/users
+```
 
 Replace `` with the actual ID.
 
 Please replace localhost:3000 with your actual server URL. If any additional headers or parameters are required, please include them in the cURL commands.
 
 The responses from these endpoints will be JSON objects containing either the requested data, a success message, or an error message.
-````
+
+```
+
+```
