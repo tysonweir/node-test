@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Unique } from "typeorm";
 import { User } from "./User";
 import { Company } from "./Company";
 
 @Entity()
+@Unique(["user", "company"])
 export class Employee {
   @PrimaryGeneratedColumn()
   id!: number;

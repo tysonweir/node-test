@@ -29,5 +29,6 @@ __decorate([
     __metadata("design:type", Company_1.Company)
 ], Employee.prototype, "company", void 0);
 exports.Employee = Employee = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)(),
+    (0, typeorm_1.Unique)(["user", "company"])
 ], Employee);
