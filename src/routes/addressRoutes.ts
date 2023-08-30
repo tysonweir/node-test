@@ -3,6 +3,7 @@ import { Address } from "../entity/Address";
 
 const router = Router();
 
+// add this route to help add addresses to the database
 router.post("/addresses", async (req, res) => {
   try {
     let addAddress = new Address();

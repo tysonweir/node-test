@@ -3,6 +3,7 @@ import { User } from "../entity/User";
 
 const router = Router();
 
+// add this route to help add users to the database
 router.post("/users", async (req, res) => {
   try {
     let newUser = new User();

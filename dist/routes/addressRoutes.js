@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Address_1 = require("../entity/Address");
 const router = (0, express_1.Router)();
+// add this route to help add addresses to the database
 router.post("/addresses", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let addAddress = new Address_1.Address();

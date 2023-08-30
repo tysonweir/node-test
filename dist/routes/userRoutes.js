@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const User_1 = require("../entity/User");
 const router = (0, express_1.Router)();
+// add this route to help add users to the database
 router.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let newUser = new User_1.User();

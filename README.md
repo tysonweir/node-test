@@ -8,7 +8,7 @@ Get the number of Employees in a specified Company
 
 Here are the details of these endpoints:
 
-1. Add User as an Employee to a Company
+1. Make a User an Employee of a Company
 
 Endpoint
 
@@ -16,11 +16,11 @@ PUT /user/:userId/company/:companyId
 
 cURL command
 
-`curl -X PUT http://localhost:3000/user//company/`
+```
+curl -X PUT http://localhost:3000/user/1/company/1
+```
 
-Replace `and` with actual IDs.
-
-2. Create an Employee with specified User and Company
+2. This will post a new employee to the company
 
 Endpoint
 
@@ -28,9 +28,9 @@ POST /user/:userId/company/:companyId/employee
 
 cURL command
 
-`curl -X POST http://localhost:3000/user//company//employee`
-
-Replace `and` with actual IDs.
+```
+curl -X POST http://localhost:3000/user/1/company/1/employee
+```
 
 3. Get the number of Employees in a specified Company
 
@@ -40,7 +40,19 @@ GET /company/:companyId/employees
 
 cURL command
 
-`curl -X GET http://localhost:3000/company//employees`
+```
+curl -X GET http://localhost:3000/company//employees
+```
+
+4. Get number of companies for each business type
+
+Endpoint
+
+GET /companies/businessTypes
+
+```
+curl -X GET http://localhost:3000/companies/businessType
+```
 
 ### Other curl options
 

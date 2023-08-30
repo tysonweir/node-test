@@ -8,49 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const User_1 = require("../entity/User");
 const Employee_1 = require("../entity/Employee");
 const Company_1 = require("../entity/Company");
+const companyActors_1 = __importDefault(require("./companyActors"));
 const router = (0, express_1.Router)();
 // a. Make a User an Employee of a Company
 router.put("/user/:userId/company/:companyId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = Number(req.params.userId);
     const companyId = Number(req.params.companyId);
-    const user = yield req.dataSource.manager.findOne(User_1.User, {
-        where: { id: userId },
-    });
-    const company = yield req.dataSource.manager.findOne(Company_1.Company, {
-        where: { id: companyId },
-    });
-    if (!user || !company) {
-        return res.status(404).send({ error: "User or Company not found" });
+    const results = yield (0, companyActors_1.default)(userId, companyId, req.dataSource);
+    if ((results === null || results === void 0 ? void 0 : results.status) === 404) {
+        res.status(results.status).send(results === null || results === void 0 ? void 0 : results.error);
     }
-    const employee = new Employee_1.Employee();
-    employee.user = user;
-    employee.company = company;
-    yield req.dataSource.manager.save(employee);
-    res.send({ employee });
+    else {
+        res.send({ employee: results.employee });
+    }
 }));
 //a.1 This will post a new employee to the company
 router.post("/user/:userId/company/:companyId/employee", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = Number(req.params.userId);
     const companyId = Number(req.params.companyId);
-    const user = yield req.dataSource.manager.findOne(User_1.User, {
-        where: { id: userId },
-    });
-    const company = yield req.dataSource.manager.findOne(Company_1.Company, {
-        where: { id: companyId },
-    });
-    if (!user || !company) {
-        return res.status(404).send({ error: "User or Company not found" });
+    const results = yield (0, companyActors_1.default)(userId, companyId, req.dataSource);
+    if ((results === null || results === void 0 ? void 0 : results.status) === 404) {
+        res.status(results.status).send(results === null || results === void 0 ? void 0 : results.error);
     }
-    const employee = new Employee_1.Employee();
-    employee.user = user;
-    employee.company = company;
-    yield req.dataSource.manager.save(employee);
-    res.send({ employee });
+    else {
+        res.send({ employee: results.employee });
+    }
 }));
 // b. Get number of employees for a Company
 router.get("/company/:companyId/employees", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -81,6 +70,7 @@ router.get("/companies/businessTypes", (req, res) => __awaiter(void 0, void 0, v
     }, {});
     res.send({ businessTypeCount });
 }));
+//  Added a company to the database
 router.post("/company", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let newCompany = new Company_1.Company();

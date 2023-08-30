@@ -2,6 +2,7 @@ import { Router } from "express";
 import { User } from "../entity/User";
 import { Employee } from "../entity/Employee";
 import { Company } from "../entity/Company";
+import companyActors from "./companyActors";
 
 const router = Router();
 
@@ -10,23 +11,12 @@ router.put("/user/:userId/company/:companyId", async (req, res) => {
   const userId = Number(req.params.userId);
   const companyId = Number(req.params.companyId);
 
-  const user = await req.dataSource.manager.findOne(User, {
-    where: { id: userId },
-  });
-  const company = await req.dataSource.manager.findOne(Company, {
-    where: { id: companyId },
-  });
-
-  if (!user || !company) {
-    return res.status(404).send({ error: "User or Company not found" });
+  const results = await companyActors(userId, companyId, req.dataSource);
+  if (results?.status === 404) {
+    res.status(results!.status).send(results?.error);
+  } else {
+    res.send({ employee: results.employee });
   }
-
-  const employee = new Employee();
-  employee.user = user;
-  employee.company = company;
-
-  await req.dataSource.manager.save(employee);
-  res.send({ employee });
 });
 
 //a.1 This will post a new employee to the company
@@ -34,25 +24,12 @@ router.post("/user/:userId/company/:companyId/employee", async (req, res) => {
   const userId = Number(req.params.userId);
   const companyId = Number(req.params.companyId);
 
-  const user = await req.dataSource.manager.findOne(User, {
-    where: { id: userId },
-  });
-
-  const company = await req.dataSource.manager.findOne(Company, {
-    where: { id: companyId },
-  });
-
-  if (!user || !company) {
-    return res.status(404).send({ error: "User or Company not found" });
+  const results = await companyActors(userId, companyId, req.dataSource);
+  if (results?.status === 404) {
+    res.status(results!.status).send(results?.error);
+  } else {
+    res.send({ employee: results.employee });
   }
-
-  const employee = new Employee();
-  employee.user = user;
-  employee.company = company;
-
-  await req.dataSource.manager.save(employee);
-
-  res.send({ employee });
 });
 
 // b. Get number of employees for a Company
@@ -92,6 +69,7 @@ router.get("/companies/businessTypes", async (req, res) => {
   res.send({ businessTypeCount });
 });
 
+//  Added a company to the database
 router.post("/company", async (req, res) => {
   try {
     let newCompany = new Company();
